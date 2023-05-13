@@ -27,7 +27,6 @@ public class DataGenerator {
                 .post("/api/auth")
                 .then()
                 .statusCode(200);
-
     }
 
     public static String getToken() {
@@ -47,35 +46,17 @@ public class DataGenerator {
         return token;
     }
 
-    public static void transferFrom(String from, int amount, String token) {
-        if (DataHelper.card1().getNumberCard().equals(from)) {
-            given()
-
-                    .headers(
-                            "Authorization",
-                            "Bearer " + token)
-                    .spec(requstSpec)
-
-                    .body(DataHelper.fromCard1(amount))
-                    .when()
-                    .post("/api/transfer")
-                    .then()
-                    .statusCode(200);
-        } else {
-            given()
-
-                    .headers(
-                            "Authorization",
-                            "Bearer " + token)
-                    .spec(requstSpec)
-
-                    .body(DataHelper.fromCard2(amount))
-                    .when()
-                    .post("/api/transfer")
-                    .then()
-                    .statusCode(200);
-        }
-
+    public static void transferFrom(DataHelper.TransferInfo transferInfo, String token, int status) {
+        given()
+                .headers(
+                        "Authorization",
+                        "Bearer " + token)
+                .spec(requstSpec)
+                .body(transferInfo)
+                .when()
+                .post("/api/transfer")
+                .then()
+                .statusCode(status);
     }
 
     public static int getBalance(String id, String token) {

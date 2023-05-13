@@ -13,13 +13,11 @@ public class DBHelper {
     private static QueryRunner runner = new QueryRunner();
 
     public DBHelper() {
-
     }
 
     private static Connection getConnection() throws SQLException {
         return DriverManager.getConnection("jdbc:mysql://localhost:3306/app", "app", "pass");
     }
-
 
     public static String getCode() {
         var codeSQL = "SELECT code FROM auth_codes ORDER BY created DESC LIMIT 1;";

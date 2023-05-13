@@ -54,15 +54,7 @@ public class DataHelper {
     }
 
     public static CardInfo invalidCard() {
-        return new CardInfo("0f3f5c2a-249e-4c3d-8287-09f7a0393911", "5559 0000 0000 0011");
-    }
-
-    public static TransferInfo fromCard1(int amount) {
-        return new TransferInfo(card1().getNumberCard(), card2().getNumberCard(), amount);
-    }
-
-    public static TransferInfo fromCard2(int amount) {
-        return new TransferInfo(card2().getNumberCard(), card1().getNumberCard(), amount);
+        return new CardInfo("0f3f5c2a-249e-4c3d-8287-09f7a0393911", "5559 0000 0000 0000");
     }
 
 
