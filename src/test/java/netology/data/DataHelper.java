@@ -33,14 +33,6 @@ public class DataHelper {
         private String code;
     }
 
-    @Value
-    public static class Token {
-        private String token;
-    }
-
-    public static Token getToken() {
-        return new Token(DataGenerator.getToken(getValidInfoForToken()));
-    }
 
     public static AuthInfo getValidAuthInfo() {
         return new AuthInfo("vasya", "qwerty123");
