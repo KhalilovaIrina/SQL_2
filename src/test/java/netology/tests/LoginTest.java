@@ -3,6 +3,7 @@ package netology.tests;
 import netology.data.DBHelper;
 import netology.data.DataGenerator;
 import netology.data.DataHelper;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,11 +12,11 @@ import org.junit.jupiter.api.Test;
 public class LoginTest {
     String token;
 
-//    @AfterAll
-//    public static void removeDB() {
-//
-//        DBHelper.removeDB();
-//    }
+    @AfterAll
+    public static void removeDB() {
+
+        DBHelper.removeDB();
+    }
 
     @BeforeEach
     public void removeAuthCodes() {
