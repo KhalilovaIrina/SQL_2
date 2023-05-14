@@ -39,5 +39,10 @@ public class DBHelper {
         runner.execute(conn, "DELETE FROM cards;");
         runner.execute(conn, "DELETE FROM users;");
     }
+    @SneakyThrows
+    public static void removeDB_authCodes() {
+        var conn = getConnection();
 
+        runner.execute(conn, "DELETE FROM auth_codes;");
+    }
 }

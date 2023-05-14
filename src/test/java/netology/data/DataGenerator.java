@@ -18,8 +18,7 @@ public class DataGenerator {
             .log(LogDetail.ALL)
             .build();
 
-    public static void validLogin() {
-        var user = DataHelper.getValidAuthInfo();
+    public static void validLogin(DataHelper.AuthInfo user) {
         given()
                 .spec(requstSpec)
                 .body(user)
@@ -29,9 +28,7 @@ public class DataGenerator {
                 .statusCode(200);
     }
 
-    public static String getToken() {
-        validLogin();
-        var data = DataHelper.getValidInfoForToken();
+    public static String getToken(DataHelper.InfoForToken data) {
 
         String token =
                 given()

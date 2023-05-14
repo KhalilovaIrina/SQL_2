@@ -12,7 +12,13 @@ public class LoginTest {
         DBHelper.removeDB();
     }
 
-    String token = DataGenerator.getToken();
+    @BeforeEach
+    public void removeAuthCodes() {
+        DBHelper.removeDB_authCodes();
+        DataGenerator.validLogin(DataHelper.getValidAuthInfo());
+    }
+
+    DataHelper.Token token = DataHelper.getToken();
 
     @Test
     void shouldSuccessTransferFromCard1ToCard2() {
@@ -20,17 +26,17 @@ public class LoginTest {
         String from = DataHelper.card1().getNumberCard();
         String to = DataHelper.card2().getNumberCard();
 
-        int initialBalanceCard1 = DataGenerator.getBalance(DataHelper.card1().getId(), token);
-        int initialBalanceCard2 = DataGenerator.getBalance(DataHelper.card2().getId(), token);
+        int initialBalanceCard1 = DataGenerator.getBalance(DataHelper.card1().getId(), token.getToken());
+        int initialBalanceCard2 = DataGenerator.getBalance(DataHelper.card2().getId(), token.getToken());
 
         int amount = DataGenerator.generateValidAmount(initialBalanceCard1);
 
         DataHelper.TransferInfo transferInfo = new DataHelper.TransferInfo(from, to, amount);
 
-        DataGenerator.transferFrom(transferInfo, token, 200);
+        DataGenerator.transferFrom(transferInfo, token.getToken(), 200);
 
-        int actualBalanceCard1 = DataGenerator.getBalance(DataHelper.card1().getId(), token);
-        int actualBalanceCard2 = DataGenerator.getBalance(DataHelper.card2().getId(), token);
+        int actualBalanceCard1 = DataGenerator.getBalance(DataHelper.card1().getId(), token.getToken());
+        int actualBalanceCard2 = DataGenerator.getBalance(DataHelper.card2().getId(), token.getToken());
 
         Assertions.assertEquals(initialBalanceCard1 - amount, actualBalanceCard1);
         Assertions.assertEquals(initialBalanceCard2 + amount, actualBalanceCard2);
@@ -41,17 +47,17 @@ public class LoginTest {
         String from = DataHelper.card2().getNumberCard();
         String to = DataHelper.card1().getNumberCard();
 
-        int initialBalanceCard1 = DataGenerator.getBalance(DataHelper.card1().getId(), token);
-        int initialBalanceCard2 = DataGenerator.getBalance(DataHelper.card2().getId(), token);
+        int initialBalanceCard1 = DataGenerator.getBalance(DataHelper.card1().getId(), token.getToken());
+        int initialBalanceCard2 = DataGenerator.getBalance(DataHelper.card2().getId(), token.getToken());
 
         int amount = DataGenerator.generateValidAmount(initialBalanceCard2);
 
         DataHelper.TransferInfo transferInfo = new DataHelper.TransferInfo(from, to, amount);
 
-        DataGenerator.transferFrom(transferInfo, token, 200);
+        DataGenerator.transferFrom(transferInfo, token.getToken(), 200);
 
-        int actualBalanceCard1 = DataGenerator.getBalance(DataHelper.card1().getId(), token);
-        int actualBalanceCard2 = DataGenerator.getBalance(DataHelper.card2().getId(), token);
+        int actualBalanceCard1 = DataGenerator.getBalance(DataHelper.card1().getId(), token.getToken());
+        int actualBalanceCard2 = DataGenerator.getBalance(DataHelper.card2().getId(), token.getToken());
 
         Assertions.assertEquals(initialBalanceCard2 - amount, actualBalanceCard2);
         Assertions.assertEquals(initialBalanceCard1 + amount, actualBalanceCard1);
@@ -65,18 +71,18 @@ public class LoginTest {
         int amount = 100;
 
         DataHelper.TransferInfo transferInfo = new DataHelper.TransferInfo(from, to, amount);
-        DataGenerator.transferFrom(transferInfo, token, 500);
+        DataGenerator.transferFrom(transferInfo, token.getToken(), 400);
     }
 
     @Test
     void shouldUnsuccessfulTransferAboveCurrentBalance() {
         String from = DataHelper.card1().getNumberCard();
         String to = DataHelper.card2().getNumberCard();
-        int initialBalanceCard1 = DataGenerator.getBalance(DataHelper.card1().getId(), token);
+        int initialBalanceCard1 = DataGenerator.getBalance(DataHelper.card1().getId(), token.getToken());
 
         int amount = DataGenerator.generateInvalidAmount(initialBalanceCard1);
         DataHelper.TransferInfo transferInfo = new DataHelper.TransferInfo(from, to, amount);
-        DataGenerator.transferFrom(transferInfo, token, 500);
+        DataGenerator.transferFrom(transferInfo, token.getToken(), 400);
     }
 
     @Test
@@ -87,12 +93,12 @@ public class LoginTest {
         int amount = -100;
 
         DataHelper.TransferInfo transferInfo = new DataHelper.TransferInfo(from, to, amount);
-        DataGenerator.transferFrom(transferInfo, token, 500);
+        DataGenerator.transferFrom(transferInfo, token.getToken(), 400);
     }
 
     @Test
     void shouldUnsuccessfulTransferToTheSameCard() {
-        int initialBalanceCard1 = DataGenerator.getBalance(DataHelper.card1().getId(), token);
+        int initialBalanceCard1 = DataGenerator.getBalance(DataHelper.card1().getId(), token.getToken());
 
         String from = DataHelper.card1().getNumberCard();
         String to = DataHelper.card1().getNumberCard();
@@ -101,7 +107,7 @@ public class LoginTest {
 
         DataHelper.TransferInfo transferInfo = new DataHelper.TransferInfo(from, to, amount);
 
-        DataGenerator.transferFrom(transferInfo, token, 500);
+        DataGenerator.transferFrom(transferInfo, token.getToken(), 400);
     }
 }
 

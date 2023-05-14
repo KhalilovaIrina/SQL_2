@@ -18,8 +18,6 @@ public class DataHelper {
         private String id;
 
         private String numberCard;
-
-
     }
 
     @Value
@@ -33,6 +31,15 @@ public class DataHelper {
     public static class InfoForToken {
         private String login;
         private String code;
+    }
+
+    @Value
+    public static class Token {
+        private String token;
+    }
+
+    public static Token getToken() {
+        return new Token(DataGenerator.getToken(getValidInfoForToken()));
     }
 
     public static AuthInfo getValidAuthInfo() {
